@@ -38,17 +38,17 @@ public class BingoAdapter extends RecyclerView.Adapter<BingoAdapter.MyViewHolder
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         // create view
         LinearLayout v =(LinearLayout) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rv_item, viewGroup, false);
-        Log.i(TAG, "onCreateViewHolder Call");
+        //Log.i(TAG, "onCreateViewHolder Call");
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Tirage currentTirage = mTirages.get(position);
-        holder.tvId.setText(currentTirage.id);
-        holder.tvNum.setText(currentTirage.num);
-        holder.tvCol.setText(currentTirage.col);
-        Log.i(TAG, "onBindViewHolder: " + position);
+        holder.tvId.setText("Triage #" + currentTirage.id);
+        holder.tvNum.setText("Numéro tiré: " + currentTirage.num);
+        holder.tvCol.setText("" + currentTirage.col);
+        //Log.i(TAG, "onBindViewHolder: " + position);
     }
 
     @Override

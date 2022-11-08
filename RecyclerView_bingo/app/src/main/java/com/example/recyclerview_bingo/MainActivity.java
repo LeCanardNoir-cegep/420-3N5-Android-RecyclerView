@@ -1,11 +1,14 @@
 package com.example.recyclerview_bingo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.recyclerview_bingo.databinding.ActivityMainBinding;
 
@@ -15,8 +18,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    public List<Tirage> tirages;
     public BingoAdapter adapter;
+    public Bingo bingo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,28 +27,18 @@ public class MainActivity extends AppCompatActivity {
         this.binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        this.bingo = new Bingo();
+
         initRecyclerView();
         feedRecyclerView();
-        changeRecyclerViewData();
     }
 
     private void feedRecyclerView() {
-        this.adapter.mTirages.addAll(Arrays.asList(
-                new Tirage(1, 'B', 2),
-                new Tirage(2, 'O', 75),
-                new Tirage(3, 'N', 32),
-                new Tirage(4, 'B', 13)
-        ));
-        adapter.notifyDataSetChanged();
-    }
-
-    private void changeRecyclerViewData() {
-        this.adapter.mTirages.addAll(Arrays.asList(
-                new Tirage(5, 'B', 5),
-                new Tirage(6, 'O', 72),
-                new Tirage(7, 'N', 30),
-                new Tirage(8, 'B', 10)
-        ));
+        for (int i = 0; i < 75; i++) {
+            this.bingo.getNewNum();
+        }
+        this.adapter.mTirages = this.bingo.tirages;
         adapter.notifyDataSetChanged();
     }
 
@@ -54,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        GridLayoutManager lm = new GridLayoutManager(this, 2);
+        LinearLayoutManager lm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(lm);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         // specify an adapter (see also next example)
         this.adapter = new BingoAdapter();
